@@ -72,12 +72,17 @@ Do not reintroduce a per-beat save.
 4. **Layout** — `::onboarding{step="layout"}` (the app assembles around the
    chat).
 5. **The look around** — `::ask{question="Want a look around first?"
-   options="Just the basics|Show me around|I'll figure it out"}`. "Just the
-   basics" is three plain lines and no overlay; "Show me around" runs the
-   built-in `tour` tool (`action="targets"` first to see what is actually on
-   screen, then one `action="start"` with 4–6 steps built from the stable
-   targets); "I'll figure it out" is one line and on. Whichever they pick,
-   the turn closes by saying the tour is always on offer.
+   options="Just the basics|Show me around|I'll figure it out"}`. The first two
+   both run the built-in `tour` tool — `action="targets"` first to see what is
+   actually on screen, then one `action="start"` built only from what it
+   reported — and differ in depth: "Just the basics" is three steps on the
+   essentials (conversations, composer, new chat), "Show me around" is 4–6.
+   "I'll figure it out" is one line and on. Whichever they pick, the turn
+   closes by saying the tour is always on offer.
+
+    Basics used to be three lines of prose and no overlay. Describing a button
+    is worse than pointing at it: the user still has to go find the thing, and
+    the words cost the same turn the highlight would have.
 
     What the tour can point at is `data-tour` handles on the chat surfaces
     (`app/chat/tour-marker.ts`) — sidebar, new chat, composer, send, model pill,

@@ -72,13 +72,27 @@ describe('the onboarding runbook', () => {
       expect(runbook).toContain(option)
     }
 
-    // Lightest first: the three-line version has to be the one their eye lands
-    // on, so the full tour reads as a deliberate step up rather than the
+    // Lightest first: the short one has to be the one their eye lands on, so
+    // the full look around reads as a deliberate step up rather than the
     // default. Nobody wants to open a new app into a click-through.
     expect(runbook.indexOf('Just the basics')).toBeLessThan(runbook.indexOf('Show me around'))
 
     // Selectors come from the tool, not from the model's imagination.
     expect(runbook).toMatch(/action="targets" FIRST/)
+  })
+
+  // The light option points at the buttons too — it is the same tour, three
+  // steps instead of six. Describing a button in prose is worse than
+  // highlighting it: the user still has to go find the thing afterwards.
+  it('runs the tour for the light option as well, not a written description', () => {
+    const runbook = buildChatOnboardingPrompt()
+
+    const basics = runbook.indexOf('Just the basics"')
+    const shared = runbook.indexOf('Both of those run the tour tool')
+
+    expect(basics).toBeGreaterThan(-1)
+    expect(shared).toBeGreaterThan(basics)
+    expect(runbook.slice(basics, shared)).toMatch(/three steps/i)
   })
 
   // The tour is the flow's most reusable trick and the easiest to never
