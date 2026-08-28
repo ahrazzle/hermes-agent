@@ -163,8 +163,9 @@ the box first.
   - Only ever at a turn boundary (`message.complete`), because a note injected
     mid-loop is a synthetic user message inside an assistant turn.
   - Never stacked under a turn that already asked something.
-- **Where should this run** rides the same counter: after five real tool calls
-  two pills appear in the composer's suggestion strip
+- **Where should this run** rides the same counter: after ten real tool calls —
+  past the first check-in, so they have seen the thing work and answered a
+  "what next?" of their own — two pills appear in the composer's suggestion strip
   (`store/suggestion-providers/hermes-account.ts`), and only when the install is
   not already signed in. Sign in, or put a model on this machine. It used to be
   one pill on the reasoning that declining needs no click — true while "local"

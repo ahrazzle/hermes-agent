@@ -28,10 +28,12 @@ import { atom } from 'nanostores'
 import { segmentTranscriptDirectives } from '@/lib/transcript-directives'
 import { offerAccountChoice } from '@/store/suggestion-providers/hermes-account'
 
-/** Tool calls before the account offer appears. Placeholder placement: the
- *  real anchor for "sign in, or stay on this machine" is still being found,
- *  and a count of real work done is a better stand-in than a timer. */
-const ACCOUNT_AFTER_TOOLS = 5
+/** Tool calls before the cloud-or-local offer appears. Placeholder placement:
+ *  the real anchor for that question is still being found, and a count of real
+ *  work done is a better stand-in than a timer. Set past the first check-in on
+ *  purpose — asking where this should run reads very differently once the user
+ *  has seen the thing work and answered a "what next?" of their own. */
+const ACCOUNT_AFTER_TOOLS = 10
 
 /** Tool calls at which Setup checks in. Two of them: one once the build is
  *  visibly underway, one deep enough in that "still what you wanted?" is a
