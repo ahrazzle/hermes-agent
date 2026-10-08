@@ -1,7 +1,7 @@
 ---
 name: test-driven-development
 description: "TDD: enforce RED-GREEN-REFACTOR, tests before code."
-version: 1.1.0
+version: 1.3.0
 author: Hermes Agent (adapted from obra/superpowers)
 license: MIT
 platforms: [linux, macos, windows]
@@ -274,6 +274,24 @@ If you catch yourself doing any of these, delete the code and restart with TDD:
 - "This is different because..."
 
 **All of these mean: Delete code. Start over with TDD.**
+
+## Mandatory shapes for buffered-diagnostic tests
+
+When the change buffers a diagnostic before logging is configured and replays it later, these four shapes are merge-blocking, not optional edge cases:
+
+- file test — record the failure pre-logging, attach an INFO file handler (or invoke the replay entry point), and assert the failure text lands in the file.
+- non-TUI test — drive a non-TUI command path (or assert a replay-into-logger entry point covers all commands) and assert the buffered failure surfaces.
+- overflow-resolution test — any user-facing "see <file>" string must prove the referenced content reaches that file. Asserting the pointer text exists is banned as sufficient.
+- refusal test — an enabled entry point refused under host isolation must yield a buffered or surfaced entry containing the config remedy.
+
+A buffer change may not land on single-surface replay plus stderr-absence tests alone.
+
+## Mandatory adversarial shapes
+
+Two more shapes are merge-blocking for anything replayed, flushed, or drained:
+
+- late-arrival test — record a new entry AFTER the replay or flush, then prove it still reaches the user through a second replay, an inline warning, or the live-logger path. A single-flush test alone is banned as sufficient.
+- boundary test — every bounded buffer (capped list, ring, MAX constant) is driven at exactly its limit: fill to capacity, replay or drain, add one more entry, and prove the new entry is still delivered. Cursor or index state must be asserted independently of list shifting, so an eviction cannot strand the cursor past the end.
 
 ## Verification Checklist
 
